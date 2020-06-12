@@ -2,9 +2,10 @@ import json
 
 
 class Books:
-    def __init__(self):
+    def __init__(self, db="books.json"):
         try:
-            with open("books.json", "r", encoding="UTF-8") as f:
+            self.db = db
+            with open(self.db, "r", encoding="UTF-8") as f:
                 self.books = json.load(f)
         except FileNotFoundError:
             self.books = []
@@ -20,7 +21,7 @@ class Books:
         self.books.append(data)
 
     def save_all(self):
-        with open("books.json", "w", encoding="UTF-8") as f:
+        with open(self.db, "w", encoding="UTF-8") as f:
             json.dump(self.books, f, ensure_ascii=False)
 
     def update(self, id, data):

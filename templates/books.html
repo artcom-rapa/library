@@ -24,7 +24,7 @@
         <td>{{ book.author }}</td>
         <td>{{ book.publishment_date }}</td>
         <td>{{ book.description }}</td>
-        <td>{{ book.image }}</td>
+        <td><img src="/uploads/{{ book.image }}" alt="{{ book.image }}" width="100px"></td>
     </tr>
 {% endfor %}
 </table>

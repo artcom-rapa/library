@@ -3,11 +3,13 @@ from flask import Flask, flash, render_template, request, redirect, url_for, sen
 from werkzeug.utils import secure_filename
 
 from forms import BookForm
-from models import books
+from models import Books
 
-
-UPLOAD_FOLDER = 'uploads'
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+UPLOAD_FOLDER = os.path.join(BASE_DIR, 'uploads')
 ALLOWED_EXTENSIONS = {'pdf', 'png', 'jpg', 'jpeg', 'gif'}
+
+books = Books(os.path.join(BASE_DIR, "books.json"))
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -25,12 +27,12 @@ def books_list():
     error = ""
     if request.method == "POST":
         if form.validate_on_submit():
-            books.create(form.data)
+            data = form.data
+            if data.get("image"):
+                data['image'] = data['image'].filename
+            books.create(data)
             books.save_all()
-        if 'file' not in request.files:
-            flash('No file part')
-            return redirect(request.url)
-        file = request.files['file']
+        file = request.files['image']
         if file.filename == '':
             flash('No selected file')
             return redirect(request.url)
@@ -39,9 +41,6 @@ def books_list():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             flash("File is uploaded")
             return redirect(url_for('uploaded_file', filename=filename))
-        if form.validate_on_submit():
-            books.create(form.data)
-            books.save_all()
         return redirect(url_for("books_list"))
 
     return render_template("books.html", form=form, books=books.all(), error=error)
