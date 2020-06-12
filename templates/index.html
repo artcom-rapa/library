@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My library</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div>
+    <h1> Dodaj księżkę:</h1>
+</div>
+<div>
+    <form method="post" action="/">
+        <label for="title">Tytuł: </label>
+        <input type="text" id="title" name="title"><br><br>
+        <label for="author">Autor: </label>
+        <input type="text" id="author" name="author"><br><br>
+        <label for="publishment_date" >Rok wydania: </label>
+        <input type="text" id="publishment_date" name="publishment_date"><br><br>
+        <p>Opis</p>
+        <label for="description"> </label>
+        <textarea cols=80 rows=4 type="textbox" id="description" name="description"
+                  placeholder="Opis..."></textarea><br><br>
+        <input type="submit" value="send"><br><br>
+    </form>
+    <form method="post" enctype=multipart/form-data>
+        <label for="img">Okładka</label>
+        <input type="file" id="img" name="file"><br><br>
+        <input type="submit" value="upload">
+    </form>
+</div>
+</body>
+</html>
